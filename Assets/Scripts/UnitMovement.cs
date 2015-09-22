@@ -7,6 +7,8 @@ public class UnitMovement : MonoBehaviour {
 	public bool isSelected;
 
 	private Vector3 mousePosition;
+	private Vector3 touchPosition;
+	public GameObject selectionBox;
 
 	// Use this for initialization
 	void Start () {
@@ -20,15 +22,39 @@ public class UnitMovement : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
+
 		if (Input.GetMouseButtonDown (1) && isSelected) {
 			// Move to click position
-			mousePosition = getMousePosition();
-			turnTowardsClickPosition(mousePosition);
-
+			mousePosition = getMousePosition ();
+			turnTowardsClickPosition (mousePosition);
+			
 			// if enemy is at position attack
+		} else {
+			if (Input.GetMouseButtonDown (0) && clickedMe ()) {
+				// make unit selected
+				isSelected = true;
+				setSelection (true);
+
+			} else if (Input.GetMouseButtonDown (0) && !clickedMe ()) {
+				isSelected = false;
+				setSelection (false);
+			}
 		}
 
 		gotoMousePosition(mousePosition);
+	}
+
+	void setSelection(bool select){
+		selectionBox.SetActive(select);
+	}
+
+	bool clickedMe() {
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		RaycastHit2D hit = Physics2D.Raycast (ray.origin, ray.direction, Mathf.Infinity);
+		if (hit.collider !=null && hit.transform == transform) {
+			return true;
+		}
+		return false;
 	}
 
 	Vector3 getMousePosition(){
@@ -43,12 +69,12 @@ public class UnitMovement : MonoBehaviour {
 		GetComponent<Rigidbody2D> ().angularVelocity = 0;
 	}
 
-	void OnMouseOver(){
-		if (Input.GetMouseButtonDown(0)) {
-			// make unit selected
-			isSelected = true;
-		}
-	}
+//	void OnMouseOver(){
+//		if (Input.GetMouseButtonDown(0)) {
+//			// make unit selected
+//			isSelected = true;
+//		}
+//	}
 
 	void gotoMousePosition(Vector3 target){
 		target.z = 0.0f;
