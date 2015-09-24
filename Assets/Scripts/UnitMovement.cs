@@ -5,10 +5,11 @@ public class UnitMovement : MonoBehaviour {
 
 	public float speed;
 	public bool isSelected;
+	public GameObject selectionBox;
 
 	private Vector3 mousePosition;
 	private Vector3 touchPosition;
-	public GameObject selectionBox;
+	private bool move;
 
 	// Use this for initialization
 	void Start () {
@@ -27,21 +28,29 @@ public class UnitMovement : MonoBehaviour {
 			// Move to click position
 			mousePosition = getMousePosition ();
 			turnTowardsClickPosition (mousePosition);
+			move = true;
 			
 			// if enemy is at position attack
 		} else {
 			if (Input.GetMouseButtonDown (0) && clickedMe ()) {
 				// make unit selected
+				mousePosition = getMousePosition ();
 				isSelected = true;
 				setSelection (true);
-
-			} else if (Input.GetMouseButtonDown (0) && !clickedMe ()) {
-				isSelected = false;
-				setSelection (false);
+				
+			} else if (isSelected && Input.GetMouseButtonDown (0) && !clickedMe ()) {
+				mousePosition = getMousePosition ();
+			}else if (isSelected && Input.GetMouseButtonUp (0) && !clickedMe ()) {
+				if(!move && checkIfLastMouseClickCloseToCurrentMouseClick()){
+					isSelected = false;
+					setSelection (false);
+				}
 			}
 		}
 
-		gotoMousePosition(mousePosition);
+		if (move) {
+			gotoMousePosition (mousePosition);
+		}
 	}
 
 	void setSelection(bool select){
@@ -62,6 +71,18 @@ public class UnitMovement : MonoBehaviour {
 		return mousePosition;
 	}
 
+	bool checkIfLastMouseClickCloseToCurrentMouseClick(){
+		Vector3 lastMousePosition = mousePosition;
+		mousePosition = getMousePosition ();
+		if(mousePosition.x <= lastMousePosition.x + 0.1f && 
+		   mousePosition.x >= lastMousePosition.x - 0.1f &&
+		   mousePosition.y <= lastMousePosition.y + 0.1f &&
+		   mousePosition.y >= lastMousePosition.y - 0.1f){
+			return true;
+		}
+		return false;
+	}
+
 	void turnTowardsClickPosition(Vector3 mousePosition){
 		Quaternion rot = Quaternion.LookRotation (transform.position - mousePosition, Vector3.forward);
 		transform.rotation = rot;
@@ -79,5 +100,8 @@ public class UnitMovement : MonoBehaviour {
 	void gotoMousePosition(Vector3 target){
 		target.z = 0.0f;
 		transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+		if (transform.position == target) {
+			move = false;
+		}
 	}
 }
