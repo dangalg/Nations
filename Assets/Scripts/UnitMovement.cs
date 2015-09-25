@@ -32,15 +32,25 @@ public class UnitMovement : MonoBehaviour {
 			
 			// if enemy is at position attack
 		} else {
-			if (Input.GetMouseButtonDown (0) && clickedMe ()) {
+			if (Input.GetMouseButtonDown (0) && selectedMe ()) {
 				// make unit selected
-				mousePosition = getMousePosition ();
-				isSelected = true;
-				setSelection (true);
+				if(!isSelected){
+					mousePosition = getMousePosition ();
+					isSelected = true;
+					setSelection (true);
+				}else{
+					mousePosition = getMousePosition ();
+					isSelected = false;
+					setSelection (false);
+				}
 				
-			} else if (isSelected && Input.GetMouseButtonDown (0) && !clickedMe ()) {
+			}else if(isSelected && selectedUnit()){
+				// Do nothing because this is multi select
+				int i = 10;
+			}
+			else if (isSelected && Input.GetMouseButtonDown (0) && !selectedMe ()) {
 				mousePosition = getMousePosition ();
-			}else if (isSelected && Input.GetMouseButtonUp (0) && !clickedMe ()) {
+			}else if (isSelected && Input.GetMouseButtonUp (0) && !selectedMe ()) {
 				if(!move && checkIfLastMouseClickCloseToCurrentMouseClick()){
 					isSelected = false;
 					setSelection (false);
@@ -57,10 +67,19 @@ public class UnitMovement : MonoBehaviour {
 		selectionBox.SetActive(select);
 	}
 
-	bool clickedMe() {
+	bool selectedMe() {
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit2D hit = Physics2D.Raycast (ray.origin, ray.direction, Mathf.Infinity);
 		if (hit.collider !=null && hit.transform == transform) {
+			return true;
+		}
+		return false;
+	}
+
+	bool selectedUnit(){
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		RaycastHit2D hit = Physics2D.Raycast (ray.origin, ray.direction, Mathf.Infinity);
+		if (hit.collider !=null && hit.transform.tag == "Unit") {
 			return true;
 		}
 		return false;
