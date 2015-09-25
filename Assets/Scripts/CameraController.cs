@@ -6,12 +6,12 @@ public class CameraController : MonoBehaviour {
 	public GameObject map;
 	public static bool isPanning; 
 
-	private float orthoZoomSpeed = 0.25f;        // The rate of change of the orthographic size in orthographic mode.
+	private float orthoZoomSpeed = 0.15f;        // The rate of change of the orthographic size in orthographic mode.
 	private float orthoCamSize;
 	private Vector3 startCamPos;
 	private float maxZoom;
 	private float minZoom = 2;
-	private float panSpeed = -0.1f;
+	private float panSpeed = -0.4f;
 	private float screenWidth;
 	private float SideMenuWidth;
 	       // Is the camera being panned?
