@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 057e5c5b4781b4cc38be13331b83cef2
-timeCreated: 1443161340
+timeCreated: 1443166144
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -59,8 +59,8 @@ TextureImporter:
         y: 371
         width: 49
         height: 156
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: .419967949, y: .0726494417}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Knight2_1
       rect:
@@ -70,7 +70,7 @@ TextureImporter:
         width: 203
         height: 233
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

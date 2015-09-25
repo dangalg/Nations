@@ -1,11 +1,9 @@
 fileFormatVersion: 2
-guid: 232732629b6c54fee838e19940931f0b
-timeCreated: 1443166119
+guid: 18e1a1b4be51e4a389e69da6143cea41
+timeCreated: 1443164508
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: Knight 1_0
-    21300002: Knight 1_1
+  fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -32,7 +30,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: 16
+    aniso: -1
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -40,7 +38,7 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -51,27 +49,7 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites:
-    - name: Knight 1_0
-      rect:
-        serializedVersion: 2
-        x: 65
-        y: 371
-        width: 49
-        height: 156
-      alignment: 9
-      pivot: {x: .435785264, y: .0360913388}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Knight 1_1
-      rect:
-        serializedVersion: 2
-        x: 200
-        y: 271
-        width: 203
-        height: 233
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+    sprites: []
   spritePackingTag: 
   userData: 
   assetBundleName: 
