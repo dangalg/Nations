@@ -10,11 +10,15 @@ public class UnitMovement : MonoBehaviour {
 	private Vector3 mousePosition;
 	private Vector3 touchPosition;
 	private bool move;
+	private bool dragSelect;
+
+	private Movement movement;
 
 	// Use this for initialization
 	void Start () {
 		isSelected = false;
 		mousePosition = transform.position;
+		movement = new Movement ();
 	}
 	
 	// Update is called once per frame
@@ -24,13 +28,23 @@ public class UnitMovement : MonoBehaviour {
 
 	void FixedUpdate(){
 
-		if (Input.GetMouseButtonDown (1) && isSelected) {
-			// Move to click position
-			mousePosition = getMousePosition ();
-			turnTowardsClickPosition (mousePosition);
-			move = true;
-			
-			// if enemy is at position attack
+//		if(Input.GetMouseButtonDown (1)){
+//			mousePosition = getMousePosition ();
+//			dragSelect = true;
+//
+//			// make selection box around soldiers and make all inside box selected
+//
+//		}
+//		else 
+		if (Input.GetMouseButtonUp (1) && isSelected) {
+//			if(!dragSelect){
+				// Move to click position
+				mousePosition = getMousePosition ();
+			movement.turnTowardsTarget (mousePosition, transform);
+				move = true;
+		
+				// if enemy is at position attack
+//			}
 		} else {
 			if (Input.GetMouseButtonDown (0) && selectedMe ()) {
 				// make unit selected
@@ -46,7 +60,6 @@ public class UnitMovement : MonoBehaviour {
 				
 			}else if(isSelected && selectedUnit()){
 				// Do nothing because this is multi select
-				int i = 10;
 			}
 			else if (isSelected && Input.GetMouseButtonDown (0) && !selectedMe ()) {
 				mousePosition = getMousePosition ();
@@ -59,7 +72,7 @@ public class UnitMovement : MonoBehaviour {
 		}
 
 		if (move) {
-			gotoMousePosition (mousePosition);
+			move = movement.gotoTarget (mousePosition, speed, transform);
 		}
 	}
 
@@ -100,27 +113,5 @@ public class UnitMovement : MonoBehaviour {
 			return true;
 		}
 		return false;
-	}
-
-	void turnTowardsClickPosition(Vector3 mousePosition){
-		Quaternion rot = Quaternion.LookRotation (transform.position - mousePosition, Vector3.forward);
-		transform.rotation = rot;
-		transform.eulerAngles = new Vector3 (0.0f, 0.0f, transform.eulerAngles.z);
-		GetComponent<Rigidbody2D> ().angularVelocity = 0;
-	}
-
-//	void OnMouseOver(){
-//		if (Input.GetMouseButtonDown(0)) {
-//			// make unit selected
-//			isSelected = true;
-//		}
-//	}
-
-	void gotoMousePosition(Vector3 target){
-		target.z = 0.0f;
-		transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
-		if (transform.position == target) {
-			move = false;
-		}
 	}
 }
